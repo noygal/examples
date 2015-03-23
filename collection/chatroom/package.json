@@ -1,0 +1,25 @@
+{
+  "name": "chatroom",
+  "version": "1.0.0",
+  "description": "React palayground",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gal Noy",
+  "license": "ISC",
+  "dependencies": {
+    "material-ui": "^0.7.1",
+    "react": "^0.12.2",
+    "react-tap-event-plugin": "^0.1.4"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "gulp": "^3.8.11",
+    "gulp-less": "^3.0.2",
+    "gulp-reactify": "^2.0.0",
+    "react-tools": "^0.13.1",
+    "reactify": "^1.1.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
