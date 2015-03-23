@@ -14,13 +14,9 @@ var Main = React.createClass({
         React.createElement(AppBar, {title : 'Chatroom'}),
         React.createElement('div', {className : 'mui-app-content-canvas'},
           React.createElement(Inputs, null),
-          React.createElement(List, null))
+          React.createElement(List, {className : 'mui-card'}))
       );
   },
-
-  _handleTouchTap: function() {
-    alert('1-2-3-4-5');
-  }
 
 });
 

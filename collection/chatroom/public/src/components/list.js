@@ -17,30 +17,26 @@ var List = React.createClass({
   render: function() {
     function createList() {
       var list = [];
-      store.store.forEach(function(message){
+      store.store.reverse().forEach(function(message){
         list.push(
-          React.createElement('div', null,
-            React.createElement('span', null, message.sender),
-            React.createElement('textarea', null, message.message)
+          React.createElement('section', {className : 'list-item'},
+            React.createElement('h5', {className : 'list-item-sender'} , message.sender + ', sent:'),
+            React.createElement('p', {className : 'list-item-message'}, message.message),
+            React.createElement('hr', null)
           )
         );
-      });
-      // console.log(store);
+      })
+      store.store.reverse();
       return list;
     }
-    return  React.createElement('div', {className : 'list'},
+    return  React.createElement('div', {className : 'list mui-card'},
               React.createElement(mui.Paper, null, createList())
             );
   },
 
   _onChange: function(message) {
-    // console.log(message);
     this.forceUpdate();
   },
-
-  _handleTouchTap: function() {
-    alert('1-2-3-4-5');
-  }
 
 });
 

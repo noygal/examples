@@ -1,25 +1,41 @@
 @import "node_modules/material-ui/src/less/scaffolding.less";
 @import "node_modules/material-ui/src/less/components.less";
 
+.sender() {
+  padding : 1rem;
+  width : 20%;
+  min-width: 10rem;
+  margin-right : 2rem;
+}
+
+.message() {
+  padding : 1rem;
+  width : 50%;
+  min-width: 20rem;
+  margin-right : 2rem;
+}
+
 .inputs {
-  margin : 2rem;
+  // margin : 2rem;
   .inputs-sender {
-    padding : 1rem;
-    width : 20%;
-    min-width: 10rem;
-    margin-right : 2rem;
+    .sender();
   }
   .inputs-message {
-    padding : 1rem;
-    width : 50%;
-    min-width: 20rem;
-    margin-right : 2rem;
+    .message()
   }
 }
 
 .list {
-  margin : 2rem;
-  .mui-paper-container{
-    padding : 1rem;
+  margin : 1rem;
+  .list-item {
+    padding-left : 2rem;
+    padding-right : 2rem;
+    padding-top : 1rem;
+    .list-item-sender {
+      // text-decoration: underline;
+    }
+    .list-item-message {
+      // .message();
+    }
   }
 }

@@ -2611,9 +2611,6 @@ hr {
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-leave-active {
   transform: translate3d(0, 100%, 0);
 }
-.inputs {
-  margin: 2rem;
-}
 .inputs .inputs-sender {
   padding: 1rem;
   width: 20%;
@@ -2627,8 +2624,10 @@ hr {
   margin-right: 2rem;
 }
 .list {
-  margin: 2rem;
+  margin: 1rem;
 }
-.list .mui-paper-container {
-  padding: 1rem;
+.list .list-item {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
 }

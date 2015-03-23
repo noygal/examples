@@ -21,7 +21,7 @@
 })();
 
 
-},{"./components/main.js":239,"react":236,"react-tap-event-plugin":74}],2:[function(require,module,exports){
+},{"./components/main.js":240,"react":236,"react-tap-event-plugin":74}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26197,23 +26197,72 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":105}],237:[function(require,module,exports){
+// message - { sender : sender, message : message}
+function create(message) {
+  dpd.messages.post(message, function(message, err) {
+    if (err) {
+      if (err.message) {
+        alert(err.message);
+      } else if (err.errors) {
+        var errors = "";
+        if (err.errors.sender) {
+          errors += err.errors.sender + "\n";
+        }
+        if (err.errors.message) {
+          errors += err.errors.message + "\n";
+        }
+        alert(errors);
+      }
+    }
+  });
+}
+
+module.exports.create = create;
+
+
+},{}],238:[function(require,module,exports){
 var React = require('react');
 var mui = require('material-ui');
+var action = require('./../actions/messages');
 
 
 var Inputs = React.createClass({
-  displayName : 'Inputs',
+  displayName: 'Inputs',
+  mixins: [React.addons.LinkedStateMixin],
+  getInitialState: function() {
+    return {
+      message: '',
+      sender: ''
+    };
+  },
   render: function() {
-    return  React.createElement('div', {className : 'inputs'},
-              React.createElement(mui.Paper, null,
-                React.createElement(mui.TextField, {className : 'inputs-sender', floatingLabelText : 'Username'}),
-                React.createElement(mui.TextField, {className : 'inputs-message', floatingLabelText : 'Message'}),
-                React.createElement(mui.RaisedButton, {label : 'Send', primary : true, onTouchTap :this._handleTouchTap}))
-            );
+    return React.createElement('div', {
+        className: 'inputs'
+      },
+      React.createElement(mui.Paper, null,
+        React.createElement(mui.TextField, {
+          className: 'inputs-sender',
+          floatingLabelText: 'Username',
+          valueLink: this.linkState('sender')
+        }),
+        React.createElement(mui.TextField, {
+          className: 'inputs-message',
+          floatingLabelText: 'Message',
+          valueLink: this.linkState('message')
+          // multiLine: true,
+        }),
+        React.createElement(mui.RaisedButton, {
+          label: 'Send',
+          primary: true,
+          onTouchTap: this._handleTouchTap
+        }))
+    );
   },
 
   _handleTouchTap: function() {
-    alert('1-2-3-4-5');
+    action.create({ message : this.state.message, sender : this.state.sender});
+    this.state.message = '';
+    this.setState(this.state);
   }
 
 });
@@ -26221,7 +26270,7 @@ var Inputs = React.createClass({
 module.exports = Inputs;
 
 
-},{"material-ui":3,"react":236}],238:[function(require,module,exports){
+},{"./../actions/messages":237,"material-ui":3,"react":236}],239:[function(require,module,exports){
 var React = require('react');
 var mui = require('material-ui');
 var store = require('./../stores/messages');
@@ -26241,37 +26290,33 @@ var List = React.createClass({
   render: function() {
     function createList() {
       var list = [];
-      store.store.forEach(function(message){
+      store.store.reverse().forEach(function(message){
         list.push(
-          React.createElement('div', null,
-            React.createElement('span', null, message.sender),
-            React.createElement('textarea', null, message.message)
+          React.createElement('section', {className : 'list-item'},
+            React.createElement('h5', {className : 'list-item-sender'} , message.sender + ', sent:'),
+            React.createElement('p', {className : 'list-item-message'}, message.message),
+            React.createElement('hr', null)
           )
         );
-      });
-      // console.log(store);
+      })
+      store.store.reverse();
       return list;
     }
-    return  React.createElement('div', {className : 'list'},
+    return  React.createElement('div', {className : 'list mui-card'},
               React.createElement(mui.Paper, null, createList())
             );
   },
 
   _onChange: function(message) {
-    // console.log(message);
     this.forceUpdate();
   },
-
-  _handleTouchTap: function() {
-    alert('1-2-3-4-5');
-  }
 
 });
 
 module.exports = List;
 
 
-},{"./../dispatchers/messages":240,"./../stores/messages":241,"material-ui":3,"react":236}],239:[function(require,module,exports){
+},{"./../dispatchers/messages":241,"./../stores/messages":242,"material-ui":3,"react":236}],240:[function(require,module,exports){
 var React = require('react');
 var mui = require('material-ui');
 
@@ -26288,20 +26333,16 @@ var Main = React.createClass({
         React.createElement(AppBar, {title : 'Chatroom'}),
         React.createElement('div', {className : 'mui-app-content-canvas'},
           React.createElement(Inputs, null),
-          React.createElement(List, null))
+          React.createElement(List, {className : 'mui-card'}))
       );
   },
-
-  _handleTouchTap: function() {
-    alert('1-2-3-4-5');
-  }
 
 });
 
 module.exports = Main;
 
 
-},{"./inputs.js":237,"./list.js":238,"material-ui":3,"react":236}],240:[function(require,module,exports){
+},{"./inputs.js":238,"./list.js":239,"material-ui":3,"react":236}],241:[function(require,module,exports){
 
 function Dispatcher() {
   var callbacks = {};
@@ -26333,7 +26374,7 @@ function Dispatcher() {
 module.exports = Dispatcher();
 
 
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 var dispatcher = require('../dispatchers/messages');
 var store = [];
 
@@ -26366,4 +26407,4 @@ module.exports.store = store;
 module.exports.load = load;
 
 
-},{"../dispatchers/messages":240}]},{},[1]);
+},{"../dispatchers/messages":241}]},{},[1]);
